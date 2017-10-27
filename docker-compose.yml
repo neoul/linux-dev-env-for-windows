@@ -12,8 +12,37 @@ services:
     restart: always
     volumes:
       - user-home:/home/${USER}
+      - files:/srv/files
+#    ports:
+#      - "$HOSTIP:137:137/udp"
+#      - "$HOSTIP:138:138/udp"
+#      - "$HOSTIP:139:139/tcp"
+#      - "$HOSTIP:22:22/tcp"
+#      - "$HOSTIP:445:445/tcp"
 
+  ftp:
+    build:
+      context: ./vsftpd-anon
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - HOSTIPADDR=$HOSTIP
+    volumes:
+      - files:/var/ftp:ro
+    ports:
+      - "$HOSTIP:20-21:20-21"
+      - "$HOSTIP:65500-65515:65500-65515"
+
+  tftp:
+    build:
+      context: ./tftpd-hpa
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - files:/var/lib/tftpboot
+    ports:
+      - "$HOSTIP:69:69/udp"
 
 volumes:
   user-home:
-
+  files:

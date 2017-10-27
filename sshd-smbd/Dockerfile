@@ -52,6 +52,8 @@ RUN echo '   path = %H' >> /etc/samba/smb.conf
 EXPOSE 137 138 139 445
 
 COPY start.sh /
+
+# add your program
+RUN apt-get install -y git
+
 CMD /start.sh
-# RUN service smbd restart
-# CMD ["/usr/sbin/sshd", "-D"]
