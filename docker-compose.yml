@@ -13,6 +13,9 @@ services:
     volumes:
       - user-home:/home/${USER}
       - files:/srv/files
+    networks:
+      dev-net:
+        ipv4_address: 172.172.0.172
 #    ports:
 #      - "$HOSTIP:137:137/udp"
 #      - "$HOSTIP:138:138/udp"
@@ -46,3 +49,12 @@ services:
 volumes:
   user-home:
   files:
+
+networks:
+  dev-net:
+    driver: bridge
+    ipam:
+      config:
+      -
+        subnet: 172.172.0.0/16
+
