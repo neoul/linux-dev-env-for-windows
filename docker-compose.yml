@@ -1,4 +1,4 @@
-version: '3.0'
+version: '3.3'
 
 services:
   builder:
@@ -15,7 +15,7 @@ services:
       - files:/srv/files
     networks:
       dev-net:
-        ipv4_address: 172.172.0.172
+        ipv4_address: $MYMACHINE
 #    ports:
 #      - "$HOSTIP:137:137/udp"
 #      - "$HOSTIP:138:138/udp"
@@ -46,6 +46,16 @@ services:
     ports:
       - "$HOSTIP:69:69/udp"
 
+  route_setup:
+    build:
+      context: ./route-setup
+      dockerfile: Dockerfile
+#    networks:
+#      nonet: {}
+    privileged: true
+    pid: "host"
+    network_mode: "none"
+
 volumes:
   user-home:
   files:
@@ -56,5 +66,7 @@ networks:
     ipam:
       config:
       -
-        subnet: 172.172.0.0/16
-
+        subnet: $MYSUBNET
+#  nonet:
+#    external:
+#      name: none
