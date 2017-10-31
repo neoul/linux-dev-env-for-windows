@@ -46,12 +46,13 @@ services:
     ports:
       - "$HOSTIP:69:69/udp"
 
-  route_setup:
+  route-setup:
     build:
       context: ./route-setup
       dockerfile: Dockerfile
 #    networks:
 #      nonet: {}
+    # restart: always
     privileged: true
     pid: "host"
     network_mode: "none"
@@ -66,7 +67,7 @@ networks:
     ipam:
       config:
       -
-        subnet: $MYSUBNET
+        subnet: $MYSUBNET_AND_MASK
 #  nonet:
 #    external:
 #      name: none
