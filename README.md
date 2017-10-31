@@ -12,12 +12,12 @@
 ### 1. Edit .env file to setup your internal LAN domain.
 
 ``` shell
-USER=neoul # Your development account ID
-UID=1000 # Your development account UID
-PASSWD=admin # Your development account password
-HOSTIP=192.168.0.78 # Your Host IP
-MYSUBNET_AND_MASK=10.10.0.0/16 # Your development domain
-MYMACHINE=10.10.0.2 # Your development Server IP
+USER=neoul # Your linux account ID
+UID=1000 # Your linux account UID
+PASSWD=admin # Your linux account password
+HOSTIP=192.168.0.78 # Your Host IP (Windows IP)
+MYSUBNET_AND_MASK=10.10.0.0/16 # Your development subnet
+MYMACHINE=10.10.0.2 # Your linux machine IP
 ```
 
 ### 2. Edit %MYSUBNET% in `route-setup/route-setup.bat` file
