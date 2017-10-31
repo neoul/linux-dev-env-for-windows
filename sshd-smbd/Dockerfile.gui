@@ -49,11 +49,15 @@ RUN echo '   directory mask = 0700' >> /etc/samba/smb.conf
 RUN echo '   valid users = %S' >> /etc/samba/smb.conf
 RUN echo '   path = %H' >> /etc/samba/smb.conf
 
-EXPOSE 137 138 139 445
-
-COPY start.sh /
+# EXPOSE 137 138 139 445
 
 # add your program
-RUN apt-get update && apt-get install -y git build-essential software-properties-common gcc
+RUN apt-get update && apt-get install -y git build-essential software-properties-common gcc expect
+COPY xorg-install.sh /usr/bin
+RUN xorg-install.sh
 
+ARG HOSTIP
+ENV HOSTIP ${HOSTIP:-127.0.0.1}
+RUN echo "export DISPLAY=$HOSTIP:0.0" >> /etc/profile
+COPY start.sh /
 CMD /start.sh

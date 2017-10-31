@@ -4,11 +4,12 @@ services:
   builder:
     build:
       context: ./sshd-smbd
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.gui
       args:
         USER: ${USER}
         UID: ${UID}
         PASSWD: ${PASSWD}
+        HOSTIP: ${HOSTIP}
     restart: always
     volumes:
       - user-home:/home/${USER}
@@ -16,12 +17,8 @@ services:
     networks:
       dev-net:
         ipv4_address: $MYMACHINE
-#    ports:
-#      - "$HOSTIP:137:137/udp"
-#      - "$HOSTIP:138:138/udp"
-#      - "$HOSTIP:139:139/tcp"
-#      - "$HOSTIP:22:22/tcp"
-#      - "$HOSTIP:445:445/tcp"
+    environment:
+      - HOSTIP=$HOSTIP
 
   ftp:
     build:
