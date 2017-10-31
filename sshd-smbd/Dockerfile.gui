@@ -59,5 +59,19 @@ RUN xorg-install.sh
 ARG HOSTIP
 ENV HOSTIP ${HOSTIP:-127.0.0.1}
 RUN echo "export DISPLAY=$HOSTIP:0.0" >> /etc/profile
+
+# ONOS
+RUN add-apt-repository -y ppa:webupd8team/java
+RUN apt-get update
+COPY oracle-java-install.sh /usr/bin
+RUN oracle-java-install.sh
+RUN echo "JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> /etc/profile
+RUN echo "MAVEN_HOME=/usr/share/maven" >> /etc/profile
+RUN apt-get install -y zip unzip bzip2 libdigest-sha-perl
+
+RUN wget https://download-cf.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz
+RUN tar xvfz ideaIC-2017.2.5.tar.gz && ln -s /idea-IC-172.4343.14/bin/idea.sh /usr/bin/idea
+
+
 COPY start.sh /
 CMD /start.sh

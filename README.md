@@ -5,6 +5,7 @@
 - windows 10
 - Install docker for windows
 - Install git for windows
+- Install vcxsrv for x window over windows
 
 ## Update your development environment
 
@@ -34,7 +35,14 @@ route add %MYSUBNET% mask 255.255.0.0 10.0.75.2
 ./route-setup/route-setup.bat
 ```
 
-## Run your development-env containers
+## Build your linux-dev-env containers
+
+``` shell
+# on top of the directory
+docker-compose build
+```
+
+## Run your linux-dev-env containers
 
 Make sure your published ip address and ports are available before starting.
 For example, 
@@ -44,6 +52,33 @@ For example,
 
 ```shell
 docker-compose up -d
+```
+
+If you don't want tftp and ftp services, comment out them from `docker-compose.yml`.
+
+``` shell
+#  ftp:
+#    build:
+#      context: ./vsftpd-anon
+#      dockerfile: Dockerfile
+#    restart: always
+#    environment:
+#      - HOSTIPADDR=$HOSTIP
+#    volumes:
+#      - files:/var/ftp:ro
+#    ports:
+#      - "$HOSTIP:20-21:20-21"
+#      - "$HOSTIP:65500-65515:65500-65515"
+#
+#  tftp:
+#    build:
+#      context: ./tftpd-hpa
+#      dockerfile: Dockerfile
+#    restart: always
+#    volumes:
+#      - files:/var/lib/tftpboot
+#    ports:
+#      - "$HOSTIP:69:69/udp"
 ```
 
 ## Access your local linux machine
@@ -59,7 +94,7 @@ ssh 10.10.0.2
 \\10.10.0.2\neoul
 ```
 
-## Stop development-env containers
+## Stop linux-dev-env containers
 
 You can stop your containers using the following command.
 
@@ -73,4 +108,14 @@ You can remove your container using the following command.
 
 ```shell
 docker-compose down
+```
+
+## Install your development tools
+
+You have to add your installation instructions into `sshd-smbd/Dockerfile` or `sshd-smbd/Dockerfile.gui`
+
+``` Dockerfile
+...
+RUN apt-get install -y zip unzip bzip2 libdigest-sha-perl
+...
 ```
