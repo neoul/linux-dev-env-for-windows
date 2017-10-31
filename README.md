@@ -1,4 +1,3 @@
-
 # Linux development environment using docker for windows
 
 ## Prerequisite
@@ -53,7 +52,11 @@ docker-compose up -d
 - via samba file sharing
 
 ``` shell
+# ssh
 ssh 10.10.0.2
+
+# remote file system
+\\10.10.0.2\neoul
 ```
 
 ## Stop development-env containers
