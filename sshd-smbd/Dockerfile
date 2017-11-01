@@ -22,7 +22,6 @@ RUN unset PASSWD
 
 
 # SSHD setup
-#RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 #RUN echo 'root:admin' | chpasswd
 #RUN echo "$USER:$PASSWD" | chpasswd
@@ -38,7 +37,6 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 EXPOSE 22
 
 # SAMBA setup
-#RUN apt-get install -y samba vim
 RUN echo '[homes]' >> /etc/samba/smb.conf
 RUN echo '   comment = Home Directories' >> /etc/samba/smb.conf
 RUN echo '   browseable = no' >> /etc/samba/smb.conf
@@ -49,11 +47,10 @@ RUN echo '   directory mask = 0700' >> /etc/samba/smb.conf
 RUN echo '   valid users = %S' >> /etc/samba/smb.conf
 RUN echo '   path = %H' >> /etc/samba/smb.conf
 
-EXPOSE 137 138 139 445
+# EXPOSE 137 138 139 445
+
+# Add your development tools here!!!
+RUN apt-get update && apt-get install -y git build-essential software-properties-common gcc expect
 
 COPY start.sh /
-
-# add your program
-RUN apt-get update && apt-get install -y git build-essential software-properties-common gcc
-
 CMD /start.sh

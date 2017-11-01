@@ -4,7 +4,7 @@ services:
   dev:
     build:
       context: ./sshd-smbd
-      dockerfile: Dockerfile.gui
+      dockerfile: Dockerfile.onos
       args:
         USER: ${USER}
         UID: ${UID}
@@ -47,9 +47,7 @@ services:
     build:
       context: ./route-setup
       dockerfile: Dockerfile
-#    networks:
-#      nonet: {}
-    # restart: always
+    restart: always
     privileged: true
     pid: "host"
     network_mode: "none"
@@ -65,6 +63,3 @@ networks:
       config:
       -
         subnet: $MYSUBNET_AND_MASK
-#  nonet:
-#    external:
-#      name: none

@@ -8,4 +8,4 @@ MAINTAINER neoul <neoul@ymail.com>
 ARG MYSUBNET_AND_MASK
 ENV MYSUBNET_AND_MASK ${MYSUBNET_AND_MASK:-10.10.0.0/16}
 
-CMD /bin/sh -c "iptables -A FORWARD -d $MYSUBNET_AND_MASK -j ACCEPT && iptables -A FORWARD -s $MYSUBNET_AND_MASK -j ACCEPT && watch -n 60 iptables -L"
+CMD /bin/sh -c "iptables -A FORWARD -d $MYSUBNET_AND_MASK -j ACCEPT && iptables -A FORWARD -s $MYSUBNET_AND_MASK -j ACCEPT && watch -n 8640 iptables -L"

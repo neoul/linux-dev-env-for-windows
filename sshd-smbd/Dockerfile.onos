@@ -57,7 +57,35 @@ ARG HOSTIP
 ENV HOSTIP ${HOSTIP:-127.0.0.1}
 RUN echo "export DISPLAY=$HOSTIP:0.0" >> /etc/profile
 
-# Add your development tools here!!!
+# ONOS development tools (example)
+
+# RUN echo "LANG=ko_KR.UTF-8" >> /etc/default/locale
+RUN apt-get install software-properties-common -y && \
+    add-apt-repository ppa:webupd8team/java -y && \
+    apt-get update && \
+    echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections && \
+    apt-get install oracle-java8-installer oracle-java8-set-default -y
+
+RUN apt-get update && apt-get install -y net-tools iputils-ping \
+    netcat zip unzip bzip2 libdigest-sha-perl curl dialog apt-utils language-pack-en language-pack-ko python-pip
+RUN echo "LANG=en_US.UTF-8" >> /etc/default/locale
+
+# RUN wget https://download-cf.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz
+# RUN tar xvfz ideaIC-2017.2.5.tar.gz && ln -s /idea-IC-172.4343.14/bin/idea.sh /usr/bin/idea
+RUN pip install requests
+
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> /etc/profile
+RUN echo "export JRE_HOME=/usr/lib/jvm/java-8-oracle/jre" >> /etc/profile
+RUN echo "export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin" >> /etc/profile
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> /etc/environment
+RUN echo "export JRE_HOME=/usr/lib/jvm/java-8-oracle/jre" >> /etc/environment
+RUN echo "export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin" >> /etc/environment
+# RUN wget http://ftp.vim.org/pub/internet/apache/karaf/3.0.8/apache-karaf-3.0.8.tar.gz
+# RUN echo "export MAVEN=/usr/share/maven" >> /etc/profile
+
+RUN echo 'export ONOS_ROOT=~/onos' >> .bashrc
+RUN echo 'source $ONOS_ROOT/tools/dev/bash_profile' >> .bashrc
+
 
 COPY start.sh /
 CMD /start.sh

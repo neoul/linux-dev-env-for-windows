@@ -119,3 +119,33 @@ You have to add your installation instructions into `sshd-smbd/Dockerfile` or `s
 RUN apt-get install -y zip unzip bzip2 libdigest-sha-perl
 ...
 ```
+
+## Troubleshooting
+
+onos-buck run onos-local에서 실행되지 않던 onos instance가 onos-run을 수행하자 실행되었음.
+또는 onos cell로 remote에 onos instance를 push하면 동작하였음...
+그러나 onos-buck run onos-local은 동작하지 않음.
+
+```
+sdn@b3f9552bc9ad:~/onos$ find . -name "*onos-run*"
+./buck-out/bin/tools/package/.onos-run
+./buck-out/gen/tools/package/onos-run__srcs
+./buck-out/gen/tools/package/onos-run__srcs/onos-run-karaf
+./buck-out/gen/tools/package/onos-run__tmp
+./buck-out/gen/tools/package/onos-run
+./buck-out/gen/tools/package/onos-run/onos-run
+./tools/package/onos-run-karaf
+sdn@b3f9552bc9ad:~/onos$ vi buck-out/bin/tools/package/.onos-run/
+sdn@b3f9552bc9ad:~/onos$ vi buck-out/gen/tools/package/onos-run
+sdn@b3f9552bc9ad:~/onos$ ./buck-out/gen/tools/package/onos-run
+-bash: ./buck-out/gen/tools/package/onos-run: Is a directory
+sdn@b3f9552bc9ad:~/onos$ ./buck-out/gen/tools/package/onos-run
+onos-run/       onos-run__srcs/ onos-run__tmp/  
+sdn@b3f9552bc9ad:~/onos$ ./buck-out/gen/tools/package/onos-run/onos-run 
+Running clean installation...
+Host [localhost]:8101 not found in /home/sdn/.ssh/known_hosts
+Creating local cluster configs for IP 127.0.0.1...
+Waiting for karaf.log
+Nov 01, 2017 12:09:32 PM org.apache.karaf.main.Main launch
+INFO: Installing and starting initial bundles
+```
