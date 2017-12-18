@@ -3,9 +3,9 @@
 ## Prerequisite
 
 - windows 10
-- Install docker for windows
-- Install git for windows
-- Install vcxsrv for x window over windows
+- docker for windows
+- git for windows
+- vcxsrv for x window on windows
 
 ## Update your development environment
 
