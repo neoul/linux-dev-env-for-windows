@@ -1,4 +1,4 @@
-# Linux development environment using docker for windows
+# Linux development environment using docker on windows
 
 ## Prerequisite
 
